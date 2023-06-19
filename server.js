@@ -7,6 +7,7 @@ dotenv.config();
 
 const indexRouter = require("./routes/index");
 const authorRouter = require("./routes/authors");
+const bookRouter = require("./routes/books");
 
 //set up view engine
 app.set("view engine", "ejs");
@@ -28,5 +29,6 @@ db.once("open", () => console.log("Connected to mongoose"));
 
 app.use("/", indexRouter); //whenever '/' endpoint will be called, it will redirect to the indexRouter, which will redirect to the routes/index.js
 app.use("/authors", authorRouter);
+app.use("/books", bookRouter);
 
 app.listen(process.env.PORT || 4000);
