@@ -8,54 +8,24 @@ const authorSchema = new mongoose.Schema({
   },
 });
 
-// error occurs here
-authorSchema.pre("deleteOne", function (next) {
-  console.log("Inside pre");
-  Book.find({ author: this.id }, (err, books) => {
-    console.log("inside book.find");
-    if (err) {
-      console.log("inside if(err)");
-      next(err);
-    } else if (books.length > 0) {
-      console.log("inside book.length");
-      next(new Error("This author has books still"));
-    } else {
-      console.log("inside last else");
-      next();
+// youtube comment reply -------
+authorSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    try {
+      const books = await Book.find({ author: this._id }).exec();
+      if (books.length > 0) {
+        next(new Error("This author has books still"));
+      } else {
+        next();
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
-  });
-});
-// error occurs here
-
-// chatgpt start-------
-// authorSchema.pre('deleteOne', function (next) {
-//   try {
-//     const books = Book.find({ author: this.id });
-//     if (books.length > 0) {
-//       throw new Error("This author has books still");
-//     } else {
-//       next();
-//     }
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-// chatgpt end--------
-
-// youtube comment start ----
-// authorSchema.pre("deleteOne", async function (next) {
-//   try {
-//     const query = this.getFilter();
-//     const hasBook = await Book.exists({ author: query._id });
-//     if (hasBook) {
-//       next(new Error("This author still has books."));
-//     } else {
-//       next();
-//     }
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-// youtube comment end ----
+  }
+);
+// youtube comment reply -------
 
 module.exports = mongoose.model("Author", authorSchema);

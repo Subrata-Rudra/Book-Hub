@@ -70,22 +70,17 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-
 // error occurs in deleting
 router.delete("/:id", async (req, res) => {
   let author;
   try {
     author = await Author.findById(req.params.id);
-    console.log(author);
     await author.deleteOne();
-    console.log("author deleted");
     res.redirect("/authors");
   } catch {
     if (author == null) {
-      console.log("author not found");
       res.redirect("/");
     } else {
-      console.log("can't delete author");
       res.redirect(`/authors/${author.id}`);
     }
   }
