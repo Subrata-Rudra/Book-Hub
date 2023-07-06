@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const bodyParser = require("body-parser");
-const methodOverride = require("method-override")  //This is used to send post, put, delete request from browser
+const methodOverride = require("method-override"); //This is used to send post, put, delete request from browser
 dotenv = require("dotenv");
 dotenv.config();
 
@@ -16,7 +16,7 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
-app.use(methodOverride('_method'))
+app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
