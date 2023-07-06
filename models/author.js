@@ -8,7 +8,6 @@ const authorSchema = new mongoose.Schema({
   },
 });
 
-// youtube comment reply -------
 authorSchema.pre(
   "deleteOne",
   { document: true, query: false },
@@ -26,6 +25,5 @@ authorSchema.pre(
     }
   }
 );
-// youtube comment reply -------
 
 module.exports = mongoose.model("Author", authorSchema);
