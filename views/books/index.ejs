@@ -28,10 +28,5 @@
     <button class="btn btn-primary" type="submit">Search</button>
   </div>
 </form>
-<div>
-  <% books.forEach(book => { %>
-  <a href="/books/<%= book.id %>">
-    <img height="150px" width="100px" src="<%= book.coverImagePath %>" />
-  </a>
-  <% }) %>
-</div>
+<br>
+<%- include('../partials/bookGrid', { books: books, large: true }) %>

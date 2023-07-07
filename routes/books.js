@@ -42,14 +42,33 @@ router.post("/", async (req, res) => {
     description: req.body.description,
   });
 
-  saveCover(book, req.body.cover);
+  /******************Exception Handling*********************** */
+  if (
+    book.title == null ||
+    book.title == "" ||
+    book.author == null ||
+    book.author == "" ||
+    book.publishDate == null ||
+    book.publishDate == "" ||
+    book.pageCount == null ||
+    book.pageCount == "" ||
+    book.description == null ||
+    book.description == "" ||
+    req.body.cover == null ||
+    req.body.cover == ""
+  ) {
+    res.redirect("/books");
+  } else {
+    saveCover(book, req.body.cover);
 
-  try {
-    const newBook = await Book.create(book);
-    res.redirect(`books/${newBook.id}`);
-  } catch {
-    renderNewPage(res, book, true);
+    try {
+      const newBook = await Book.create(book);
+      res.redirect(`books/${newBook.id}`);
+    } catch {
+      renderNewPage(res, book, true);
+    }
   }
+  /******************Exception Handling*********************** */
 });
 
 // Show book route
